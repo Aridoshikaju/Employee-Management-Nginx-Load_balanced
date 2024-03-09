@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .employee-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .employee-list li {
+            margin-bottom: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .employee-list li span {
+            font-weight: bold;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-group button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="container">
+        <h2>Employee Management System</h2>
+        <form id="employeeForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit">Register Employee</button>
+        </form>
+        <h3>Employee List</h3>
+        <ul class="employee-list" id="employeeList"></ul>
+        <div class="btn-group">
+            <button onclick="getAllEmployees()">Get All Employees</button>
+            <button onclick="getAllEmployees()">Get All Employees</button>
+            <button onclick="getAllEmployees()">Get All Employees</button>
+        </div>
+    </div> -->
+
+    <div class="container">
+        <h2>Employee Management System</h2>
+        <form id="employeeForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit">Register Employee</button>
+        </form>
+        <h3>Employee List</h3>
+        <ul class="employee-list" id="employeeList"></ul>
+        <div class="btn-group">
+            <button onclick="getAllEmployees()">Get All Employees</button>
+            <label for="employeeId">Actions using Employee ID:</label>
+            <input type="text" id="employeeId" name="employeeId">
+            <button onclick="getEmployeeById()">Get Employee by ID</button>
+            <button onclick="deleteEmployeeById()">Delete Employee by ID</button>
+            <button onclick="deleteEmployeeAll()">Delete All Employees</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('employeeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            registerEmployee();
+        });
+        function getEmployeeById() {
+            const employeeId = document.getElementById('employeeId').value;
+
+            fetch(`http://localhost:7777/employee/${employeeId}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to get employee by ID');
+            })
+            .then(data => {
+                const employeeList = document.getElementById('employeeList');
+                employeeList.innerHTML = '';
+                const listItem = document.createElement('li');
+                listItem.textContent = `ID: ${data.employeeId}, Name: ${data.name}, City: ${data.city}`;
+                employeeList.appendChild(listItem);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to get employee by ID');
+            });
+        }
+
+        function deleteEmployeeAll() {
+            // const employeeId = document.getElementById('employeeId').value;
+
+            fetch('http://localhost:7777/employee/all', {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to delete all employees');
+            })
+            .then(data => {
+                alert("All Employees have been deleted");
+                // You may want to update the UI or fetch the updated employee list
+            })
+            .then(() => {
+                const employeeList = document.getElementById('employeeList');
+                employeeList.innerHTML = '';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete all employee');
+            });
+        }
+
+        function deleteEmployeeById() {
+            const employeeId = document.getElementById('employeeId').value;
+
+            fetch(`http://localhost:7777/employee/${employeeId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to delete employee by ID');
+            })
+            .then(data => {
+                alert(`Employee with ID ${employeeId} has been deleted`);
+                // You may want to update the UI or fetch the updated employee list
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to delete employee by ID');
+            });
+        }
+
+        function registerEmployee() {
+            const name = document.getElementById('name').value;
+            const city = document.getElementById('city').value;
+
+            fetch('http://localhost:7777/employee', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, city })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to register employee');
+            })
+            .then(data => {
+                alert(`Employee registered with ID: ${data.employeeId}`);
+                document.getElementById('employeeForm').reset();
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function getAllEmployees() {
+            fetch('http://localhost:7777/employees/all')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to fetch employees');
+            })
+            .then(data => {
+                const employeeList = document.getElementById('employeeList');
+                employeeList.innerHTML = '';
+                data.forEach(employee => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `ID: ${employee.employeeId}, Name: ${employee.name}, City: ${employee.city}`;
+                    employeeList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        // // Implement updateEmployee() and deleteEmployee() functions similarly
+
+        // // Function for updating an employee
+        // function updateEmployee() {
+        //     // Implement update functionality here
+        // }
+
+        // // Function for deleting an employee
+        // function deleteEmployee() {
+        //     // Implement delete functionality here
+        // }
+    </script>
+</body>
+</html>
