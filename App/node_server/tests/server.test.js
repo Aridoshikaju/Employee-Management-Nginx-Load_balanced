@@ -1,5 +1,7 @@
 supertest = require('supertest');
 const assert = require('assert');
+const path = require('path')
+const fs = require('fs');
 const app = require('../server.js'); // Assuming your server file is named server.js
 
 let employee = readAllEmployees()
@@ -46,8 +48,10 @@ describe('API Tests', function() {
 
     // Test GET /employee/:id
     it('GET /employee/:id should return the specified employee', function(done) {
+        // const all_employee = readAllEmployees();
         const employeeId = employee[0].employeeId;
-        console.log(`requesting for ${employeeId}`)
+        // console.log(`Requesting employee with ID: ${employeeId}`);
+        // console.log(`requesting for ${employeeId}`)
 
         api.get(`/employee/${employeeId}`)
            .expect(200)
@@ -140,12 +144,14 @@ describe('API Tests', function() {
 
 function readAllEmployees() {
     try {
-        const data = fs.readFileSync('../employees.json', 'utf8');
+        const filePath = path.join(__dirname, '..', 'employees.json');
+        const data = fs.readFileSync(filePath, 'utf8');
         return JSON.parse(data);
     } catch (err) {
         if (err.code === 'ENOENT') {
             console.log("File not found, creating...");
-            fs.writeFileSync('../employees.json', '[]', 'utf8');
+            const filePath = path.join(__dirname, '..', 'employees.json');
+            fs.writeFileSync(filePath, '[]', 'utf8');
             return [];
         } else {
             console.error('Error reading file:', err);
