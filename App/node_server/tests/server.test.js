@@ -23,7 +23,7 @@ describe('API Tests', function() {
     // Test GET /greeting
     it('GET /greeting should return "Hello world!"', function(done) {
         api.get('/greeting')
-           .expect(200)
+           .expect(400)
            .end(function(err, res) {
                if (err) return done(err);
                assert.strictEqual(res.text, 'Hello world!');
