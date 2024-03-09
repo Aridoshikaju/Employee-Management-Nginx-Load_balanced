@@ -47,6 +47,7 @@ describe('API Tests', function() {
     // Test GET /employee/:id
     it('GET /employee/:id should return the specified employee', function(done) {
         const employeeId = employee[0].employeeId;
+        console.log(`requesting for ${employeeId}`)
 
         api.get(`/employee/${employeeId}`)
            .expect(200)
