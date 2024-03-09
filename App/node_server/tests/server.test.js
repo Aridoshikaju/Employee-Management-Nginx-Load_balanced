@@ -140,6 +140,13 @@ describe('API Tests', function() {
            .expect(404)
            .end(done);
     });
+
+    after(function(done) {
+        app.close(() => {
+            console.log('Server closed');
+            done();
+        });
+    });
 });
 
 function readAllEmployees() {

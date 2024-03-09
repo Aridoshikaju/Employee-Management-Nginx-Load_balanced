@@ -182,9 +182,12 @@
                 }
                 throw new Error('Failed to delete employee by ID');
             })
-            .then(data => {
+            .then( () => {
                 alert(`Employee with ID ${employeeId} has been deleted`);
                 // You may want to update the UI or fetch the updated employee list
+            })
+            .then( data => {
+                getAllEmployees();
             })
             .catch(error => {
                 console.error('Error:', error);
