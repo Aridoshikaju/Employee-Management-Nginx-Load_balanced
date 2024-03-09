@@ -122,6 +122,22 @@ function saveAllEmployees() {
 
 module.exports = app;
 
-app.listen(PORT, () => {
+// app.listen(PORT, () => {
+//     console.log("Server running at PORT", PORT);
+// });
+
+const server = app.listen(PORT, () => {
     console.log("Server running at PORT", PORT);
 });
+
+module.exports = server; // Export the server object
+
+// In case you need to manually close the server
+function closeServer() {
+    server.close(() => {
+        console.log("Server closed");
+    });
+}
+
+// Export the function to allow closing the server externally if needed
+module.exports.closeServer = closeServer;

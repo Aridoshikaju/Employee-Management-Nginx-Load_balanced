@@ -8,7 +8,13 @@ let employee = readAllEmployees()
 
 describe('API Tests', function() {
     let api;
-
+    
+    after(function(done) {
+        app.close(() => {
+            console.log('Server closed');
+            done();
+        });
+    });
     // Before each test, initialize Supertest with your Express app
     beforeEach(function() {
         api = supertest(app);
@@ -141,12 +147,6 @@ describe('API Tests', function() {
            .end(done);
     });
 
-    after(function(done) {
-        app.close(() => {
-            console.log('Server closed');
-            done();
-        });
-    });
 });
 
 function readAllEmployees() {
