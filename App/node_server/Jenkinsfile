@@ -25,6 +25,7 @@ pipeline {
         stage('Testing Docker') {
             steps {
                 script {
+                    echo 'wokring brother'
                     sh 'docker --version'
                 }
             }
