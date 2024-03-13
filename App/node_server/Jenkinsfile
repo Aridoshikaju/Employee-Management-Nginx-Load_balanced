@@ -6,7 +6,9 @@ pipeline{
     stages{
         stage('testing dokcer'){
             steps{
-                sh docker --version
+                script{
+                    sh docker --version
+                }
             }
         }
         stage('Checkout'){
