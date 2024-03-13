@@ -4,6 +4,11 @@ pipeline{
         DOCKER_CREDENTIALS = credentials('Docker')
     }
     stages{
+        stage('testing dokcer'){
+            steps{
+                sh docker --version
+            }
+        }
         stage('Checkout'){
             steps{
                 git 'https://github.com/Aridoshikaju/Employee-Management-Nginx-Load_balanced.git'
