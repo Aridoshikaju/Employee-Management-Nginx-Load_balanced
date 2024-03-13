@@ -62,9 +62,11 @@
 pipeline{
     agent any
     stages{
-        steps('testing'){
-            script{
-                echo bullshit
+        stage('testing'){
+            step{
+                script{
+                    echo bullshit
+                }
             }
         }
     }
