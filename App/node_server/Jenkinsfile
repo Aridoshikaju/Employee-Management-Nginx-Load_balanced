@@ -1,39 +1,48 @@
-pipeline{
+pipeline {
     agent any
-
-    tools {
-        Docker 1.12.6
-    }
 
     environment {
         DOCKER_CREDENTIALS = credentials('Docker')
     }
-    stages{
-        stage('testing dokcer'){
-            steps{
-                script{
+
+    stages {
+        stage('Install Docker') {
+            steps {
+                script {
+                    // Install Docker using shell command
+                    sh 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh'
+                }
+            }
+        }
+
+        stage('Testing Docker') {
+            steps {
+                script {
                     sh 'docker --version'
                 }
             }
         }
-        stage('Checkout'){
-            steps{
+
+        stage('Checkout') {
+            steps {
                 git 'https://github.com/Aridoshikaju/Employee-Management-Nginx-Load_balanced.git'
             }
         }
-        stage('Building Container'){
-            steps{
-                dir('App/node_server'){
-                    script{
+
+        stage('Building Container') {
+            steps {
+                dir('App/node_server') {
+                    script {
                         docker.build("aridoshikaju/employee_management:latest")
                     }
                 }
             }
         }
-        stage('Pushing to docker hub'){
-            steps{
-                script{
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+
+        stage('Pushing to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('', DOCKER_CREDENTIALS) {
                         docker.image("aridoshikaju/employee_management:latest").push()
                     }
                 }
