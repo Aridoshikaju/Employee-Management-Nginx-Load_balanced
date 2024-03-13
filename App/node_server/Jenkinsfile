@@ -6,6 +6,11 @@ pipeline {
     }
 
     stages {
+        stage('suck it'){
+            script{
+                echo something
+            }
+        }
         stage('Install Docker') {
             steps {
                 script {
