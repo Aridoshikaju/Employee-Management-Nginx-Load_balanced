@@ -48,6 +48,9 @@ web_modules/
 # TypeScript cache
 *.tsbuildinfo
 
+#Push script
+Git_push.sh
+
 # Optional npm cache directory
 .npm
 
