@@ -2,7 +2,7 @@ pipeline{
     agent any
 
     tools {
-        docker "1.12.6"
+        Docker "1.12.6"
     }
 
     environment {
