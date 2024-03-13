@@ -12,7 +12,9 @@ pipeline{
         stage('Building Container'){
             steps{
                 dir('App/node_server'){
-                    docker.build("aridoshikaju/employee_management:latest")
+                    script{
+                        docker.build("aridoshikaju/employee_management:latest")
+                    }
                 }
             }
         }
