@@ -68,7 +68,7 @@ app.put('/employee/:id', (req, res) => {
         employee.name = req.body.name;
         employee.city = req.body.city;
         saveAllEmployees();
-        res.status(200).json(employee);
+        res.status(201).json(employee);
     } else {
         res.status(404).json({ message: `Employee with ${req.params.id} was not found` });
     }
