@@ -59,13 +59,13 @@
 // }
 
 
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('testing'){
-            step{
-                script{
-                    echo bullshit
+    stages {
+        stage('testing') {
+            steps {
+                script {
+                    echo 'bullshit'
                 }
             }
         }
