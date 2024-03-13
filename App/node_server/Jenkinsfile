@@ -9,7 +9,7 @@ pipeline {
         stage('suck it'){
             steps{
                 script{
-                    echo something
+                    echo 'something'
                 }
             }
         }
