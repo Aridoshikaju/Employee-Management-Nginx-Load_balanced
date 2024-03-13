@@ -1,0 +1,25 @@
+pipeline{
+    agent any
+    environment {
+        DOCKER_CREDENTIALS = credentials('dockerHubCredentials')
+    }
+    stages{
+        stage('Building Container'){
+            steps{
+                git 'https://github.com/Aridoshikaju/Employee-Management-Nginx-Load_balanced/tree/8f3dbe3690b7816dae6b12c5f5ed7b23700e72e0/App/node_server'
+                script{
+                    docker.build("aridoshikaju/employee_management:latest")
+                }
+            }
+        }
+        stage('Pushing to docker hub'){
+            steps{
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS) {
+                        docker.image("aridoshikaju/employee_management:latest").push()
+                    }
+                }
+            }
+        }
+    }
+}
