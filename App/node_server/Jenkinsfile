@@ -1,58 +1,70 @@
-pipeline {
+// pipeline {
+//     agent any
+
+//     environment {
+//         DOCKER_CREDENTIALS = credentials('Docker')
+//     }
+
+//     stages {
+//         stage('suck it'){
+//             steps{
+//                 script{
+//                     echo something
+//                 }
+//             }
+//         }
+//         stage('Install Docker') {
+//             steps {
+//                 script {
+//                     // Install Docker using shell command
+//                     sh 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh'
+//                 }
+//             }
+//         }
+
+//         stage('Testing Docker') {
+//             steps {
+//                 script {
+//                     sh 'docker --version'
+//                 }
+//             }
+//         }
+
+//         stage('Checkout') {
+//             steps {
+//                 git 'https://github.com/Aridoshikaju/Employee-Management-Nginx-Load_balanced.git'
+//             }
+//         }
+
+//         stage('Building Container') {
+//             steps {
+//                 dir('App/node_server') {
+//                     script {
+//                         docker.build("aridoshikaju/employee_management:latest")
+//                     }
+//                 }
+//             }
+//         }
+
+//         stage('Pushing to Docker Hub') {
+//             steps {
+//                 script {
+//                     docker.withRegistry('', DOCKER_CREDENTIALS) {
+//                         docker.image("aridoshikaju/employee_management:latest").push()
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+pipeline{
     agent any
-
-    environment {
-        DOCKER_CREDENTIALS = credentials('Docker')
-    }
-
-    stages {
-        stage('suck it'){
-            steps{
-                script{
-                    echo something
-                }
-            }
-        }
-        stage('Install Docker') {
-            steps {
-                script {
-                    // Install Docker using shell command
-                    sh 'curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh'
-                }
-            }
-        }
-
-        stage('Testing Docker') {
-            steps {
-                script {
-                    sh 'docker --version'
-                }
-            }
-        }
-
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Aridoshikaju/Employee-Management-Nginx-Load_balanced.git'
-            }
-        }
-
-        stage('Building Container') {
-            steps {
-                dir('App/node_server') {
-                    script {
-                        docker.build("aridoshikaju/employee_management:latest")
-                    }
-                }
-            }
-        }
-
-        stage('Pushing to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('', DOCKER_CREDENTIALS) {
-                        docker.image("aridoshikaju/employee_management:latest").push()
-                    }
-                }
+    stages{
+        steps{
+            script{
+                echo bullshit
             }
         }
     }
