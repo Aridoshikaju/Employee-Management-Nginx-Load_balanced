@@ -151,7 +151,7 @@ describe('API Tests', function() {
 
 function readAllEmployees() {
     try {
-        const filePath = path.join(__dirname, '..', 'employees.json');
+        const filePath = path.join(__dirname, '../..', 'employees.json');
         const data = fs.readFileSync(filePath, 'utf8');
         return JSON.parse(data);
     } catch (err) {

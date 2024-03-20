@@ -131,3 +131,15 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Maven specific
+target/
+*.iml
+
+# IDE files
+.idea/
+*.ipr
+*.iws
+*.classpath
+*.project
+*.settings/

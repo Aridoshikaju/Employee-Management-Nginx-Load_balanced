@@ -3,6 +3,7 @@ const app = express();
 const fs = require('fs');
 const uuid = require('uuid');
 const cors = require('cors');
+const path = require('path')
 app.use(express.json());
 app.use(cors())
 
@@ -100,7 +101,7 @@ app.delete('/employee/:id', (req, res)=>{
 
 function readAllEmployees() {
     try {
-        const data = fs.readFileSync('./employees.json', 'utf8');
+        const data = fs.readFileSync(path.join(__dirname, '..', 'employees.json'), 'utf8');
         return JSON.parse(data);
     } catch (err) {
         if (err.code === 'ENOENT') {
@@ -115,7 +116,7 @@ function readAllEmployees() {
 }
 
 function saveAllEmployees() {
-    fs.writeFile('./employees.json', JSON.stringify(employees), err => {
+    fs.writeFile(path.join(__dirname, '..', 'employees.json'), JSON.stringify(employees), err => {
         if (err) console.log("Error writing to file:", err);
     });
 }
